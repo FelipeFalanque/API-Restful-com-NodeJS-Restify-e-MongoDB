@@ -1,0 +1,24 @@
+{
+  "name": "CursoNode_2",
+  "version": "1.0.0",
+  "description": "API Restaurante",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "mongoose": "^5.9.12",
+    "restify": "^8.5.1",
+    "restify-errors": "^8.0.2"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "@types/mongoose": "^5.7.15",
+    "@types/restify": "^8.4.2",
+    "@types/restify-errors": "^4.3.3"
+  }
+}
