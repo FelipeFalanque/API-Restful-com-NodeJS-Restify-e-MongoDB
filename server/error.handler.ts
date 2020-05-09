@@ -22,6 +22,7 @@ export const handleError = (req: restify.Request, resp: restify.Response, err, d
             }
             err.toJSON = ()=>{
                 return {
+                    message : 'Error in validation',
                     errors : message
                 }
             }

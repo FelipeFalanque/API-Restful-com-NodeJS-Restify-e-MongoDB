@@ -9,7 +9,7 @@ const server = new server_1.Server();
 server.bootstrap([
     users_router_1.usersRouter,
     restaurants_router_1.restaurantsRouter,
-    reviews_router_1.reviwesRouter,
+    reviews_router_1.reviewsRouter,
     main_router_1.mainRouter
 ])
     .then(server => {

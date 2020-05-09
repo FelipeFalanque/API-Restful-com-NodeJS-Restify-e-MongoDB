@@ -14,9 +14,9 @@ export class Server {
     initializeDb() {
         (<any>mongoose).Promise = global.Promise
         return mongoose.connect(environment.db.url, {
-            useMongoClient: true,
-            //useNewUrlParser: true,
-            //useUnifiedTopology: true
+            useMongoClient: true
+            //,useNewUrlParser: true
+            //,useUnifiedTopology: true
         })
     }
 
@@ -54,4 +54,8 @@ export class Server {
         return  this.initializeDb().then(() => 
                 this.initRoutes(routers).then(() => this))  
     }
+
+    shutdown(){
+        return mongoose.disconnect().then(()=>this.application.close())
+      }
 }

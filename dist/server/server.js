@@ -9,7 +9,9 @@ class Server {
     initializeDb() {
         mongoose.Promise = global.Promise;
         return mongoose.connect(environment_1.environment.db.url, {
-            useMongoClient: true,
+            useMongoClient: true
+            //,useNewUrlParser: true
+            //,useUnifiedTopology: true
         });
     }
     initRoutes(routers) {
@@ -39,6 +41,9 @@ class Server {
     }
     bootstrap(routers = []) {
         return this.initializeDb().then(() => this.initRoutes(routers).then(() => this));
+    }
+    shutdown() {
+        return mongoose.disconnect().then(() => this.application.close());
     }
 }
 exports.Server = Server;

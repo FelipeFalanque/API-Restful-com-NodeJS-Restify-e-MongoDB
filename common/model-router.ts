@@ -6,7 +6,7 @@ export abstract class ModelRouter<D extends mongoose.Document> extends Router {
     
     basePath: string
 
-    pageSize: number = 1
+    pageSize: number = 10
     
     constructor(protected model: mongoose.Model<D>) {
         super()

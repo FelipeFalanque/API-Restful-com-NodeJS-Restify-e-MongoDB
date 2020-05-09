@@ -4,7 +4,7 @@ import * as mongoose from 'mongoose'
 import {NotFoundError} from 'restify-errors'
 import {Review} from './reviews.model'
 
-class ReviwesRouter extends ModelRouter<Review> {
+class ReviewsRouter extends ModelRouter<Review> {
   constructor(){
     super(Review)
   }
@@ -53,4 +53,4 @@ class ReviwesRouter extends ModelRouter<Review> {
 
 }
 
-export const reviwesRouter = new ReviwesRouter()
+export const reviewsRouter = new ReviewsRouter()

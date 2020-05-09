@@ -20,6 +20,7 @@ exports.handleError = (req, resp, err, done) => {
             }
             err.toJSON = () => {
                 return {
+                    message: 'Error in validation',
                     errors: message
                 };
             };

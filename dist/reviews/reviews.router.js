@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const model_router_1 = require("../common/model-router");
 const reviews_model_1 = require("./reviews.model");
-class ReviwesRouter extends model_router_1.ModelRouter {
+class ReviewsRouter extends model_router_1.ModelRouter {
     constructor() {
         super(reviews_model_1.Review);
     }
@@ -44,5 +44,5 @@ class ReviwesRouter extends model_router_1.ModelRouter {
         application.del(`${this.basePath}/:id`, [this.validateId, this.delete]);
     }
 }
-exports.reviwesRouter = new ReviwesRouter();
+exports.reviewsRouter = new ReviewsRouter();
 //# sourceMappingURL=reviews.router.js.map
