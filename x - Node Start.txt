@@ -1,0 +1,11 @@
+cd "C:\Arquivos de Programas\MongoDB\Server\4.2\bin\" .\mongod.exe
+
+nodemon .\dist\main.js
+
+tsc -w
+
+
+cada comando em um prompt
+
+
+npm run test ou npm test

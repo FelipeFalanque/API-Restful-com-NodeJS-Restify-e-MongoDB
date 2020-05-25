@@ -1,3 +1,5 @@
+import * as fs from 'fs'
+
 import * as restify from 'restify'
 import * as mongoose from 'mongoose'
 
@@ -5,6 +7,7 @@ import {environment} from '../common/environment'
 import {Router} from '../common/router'
 import {mergePatchBodyParser} from './merge-patch.parser'
 import {handleError} from './error.handler'
+import {tokenParser} from '../security/token.parser'
 
 
 export class Server {
@@ -23,15 +26,24 @@ export class Server {
     initRoutes(routers: Router[]): Promise<any>{
         return new Promise((resolve, reject) => {
             try{
-                this.application = restify.createServer({
-                    name: 'api',
-                    version: '1.0.0'
-                })
+
+                const options: restify.ServerOptions = {
+                    name: 'meat-api',
+                    version: '1.0.0',
+                }
+                
+                if(environment.security.enableHTTPS){
+                    options.certificate = fs.readFileSync(environment.security.certificate),
+                    options.key = fs.readFileSync(environment.security.key)
+                }
+        
+                this.application = restify.createServer(options)
 
                 //plugins
                 this.application.use(restify.plugins.queryParser())
                 this.application.use(restify.plugins.bodyParser())
                 this.application.use(mergePatchBodyParser)
+                this.application.use(tokenParser)
 
                 //routes
                 for (let router of routers) {

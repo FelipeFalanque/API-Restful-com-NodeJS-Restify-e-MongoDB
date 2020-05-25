@@ -6,11 +6,16 @@ import {environment} from '../common/environment'
 export interface User extends mongoose.Document {
     name: string,
     email: string,
-    password: string
+    password: string,
+    gender: string,
+    cpf: string,
+    profiles: string[],
+    matches(password: string): boolean,
+    hasAny(...profiles: string[]): boolean // Sera passado nome de perfils
 }
 
 export interface UserModel extends mongoose.Model<User> {
-    findByEmail(email: string): Promise<User>
+    findByEmail(email: string, projection?: string): Promise<User>
 }
 
 const userSchema = new mongoose.Schema({
@@ -43,11 +48,23 @@ const userSchema = new mongoose.Schema({
             validator: validateCPF,
             message: '{PATH}: Invalid CPF ({VALUE})'
         }
+    },
+    profiles: {
+        type: [String],
+        required: false
     }
 })
 
-userSchema.statics.findByEmail = function(email: string){
-    return this.findOne({email}) //{email: email}
+userSchema.statics.findByEmail = function(email: string, projection: string){
+    return this.findOne({email}, projection) //{email: email}
+}
+
+userSchema.methods.matches = function(password: string) : boolean{
+    return bcrypt.compareSync(password, this.password)
+}
+
+userSchema.methods.hasAny = function(...profiles: string[]) : boolean{
+    return profiles.some(profile => this.profiles.indexOf(profile) !== -1)
 }
 
 const hashPassword = (obj, next) => {

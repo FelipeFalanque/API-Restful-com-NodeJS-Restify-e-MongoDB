@@ -20,6 +20,26 @@ const beforeAllTests = () => {
         restaurants_router_1.restaurantsRouter
     ])
         .then(() => users_model_1.User.remove({}).exec())
+        .then(() => {
+        let admin = new users_model_1.User();
+        admin.name = 'admin';
+        admin.email = 'admin@email.com';
+        admin.cpf = '935.961.680-07';
+        admin.gender = 'Male';
+        admin.password = '1234567';
+        admin.profiles = ['admin', 'user'];
+        return admin.save();
+    })
+        .then(() => {
+        let user = new users_model_1.User();
+        user.name = 'user';
+        user.email = 'user@email.com';
+        user.cpf = '648.853.090-93';
+        user.gender = 'Male';
+        user.password = '1234567';
+        user.profiles = ['user'];
+        return user.save();
+    })
         .then(() => reviews_model_1.Review.remove({}).exec())
         .then(() => restaurants_model_1.Restaurant.remove({}).exec());
 };

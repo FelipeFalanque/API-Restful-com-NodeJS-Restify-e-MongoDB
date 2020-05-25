@@ -1,10 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const fs = require("fs");
 const restify = require("restify");
 const mongoose = require("mongoose");
 const environment_1 = require("../common/environment");
 const merge_patch_parser_1 = require("./merge-patch.parser");
 const error_handler_1 = require("./error.handler");
+const token_parser_1 = require("../security/token.parser");
 class Server {
     initializeDb() {
         mongoose.Promise = global.Promise;
@@ -17,14 +19,20 @@ class Server {
     initRoutes(routers) {
         return new Promise((resolve, reject) => {
             try {
-                this.application = restify.createServer({
-                    name: 'api',
-                    version: '1.0.0'
-                });
+                const options = {
+                    name: 'meat-api',
+                    version: '1.0.0',
+                };
+                if (environment_1.environment.security.enableHTTPS) {
+                    options.certificate = fs.readFileSync(environment_1.environment.security.certificate),
+                        options.key = fs.readFileSync(environment_1.environment.security.key);
+                }
+                this.application = restify.createServer(options);
                 //plugins
                 this.application.use(restify.plugins.queryParser());
                 this.application.use(restify.plugins.bodyParser());
                 this.application.use(merge_patch_parser_1.mergePatchBodyParser);
+                this.application.use(token_parser_1.tokenParser);
                 //routes
                 for (let router of routers) {
                     router.applyRoutes(this.application);

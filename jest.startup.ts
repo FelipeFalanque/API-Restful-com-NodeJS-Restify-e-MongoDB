@@ -10,6 +10,7 @@ import {Review} from './reviews/reviews.model'
 import {Restaurant} from './restaurants/restaurants.model'
 
 let server: Server
+
 const beforeAllTests = ()=>{
   environment.db.url = process.env.DB_URL || 'mongodb://localhost/api-test-db'
   environment.server.port = process.env.SERVER_PORT || 3001
@@ -20,6 +21,26 @@ const beforeAllTests = ()=>{
     restaurantsRouter
   ])
   .then(()=>User.remove({}).exec())
+  .then(()=>{
+    let admin = new User()
+    admin.name = 'admin'
+    admin.email = 'admin@email.com'
+    admin.cpf = '935.961.680-07'
+    admin.gender = 'Male'
+    admin.password = '1234567'
+    admin.profiles = ['admin', 'user']
+    return admin.save()
+  })
+  .then(()=>{
+    let user = new User()
+    user.name = 'user'
+    user.email = 'user@email.com'
+    user.cpf = '648.853.090-93'
+    user.gender = 'Male'
+    user.password = '1234567'
+    user.profiles = ['user']
+    return user.save()
+  })
   .then(()=>Review.remove({}).exec())
   .then(()=>Restaurant.remove({}).exec())
 }
