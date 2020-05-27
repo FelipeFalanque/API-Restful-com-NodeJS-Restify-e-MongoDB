@@ -9,3 +9,23 @@ cada comando em um prompt
 
 
 npm run test ou npm test
+
+pm2 start index.js
+kill -9 8600 => 8600 num processo
+pm2 ls => lista de processos
+pm2 stop index => "index" nome do processo
+pm2 start index => "index" nome do processo
+pm2 delete index => "index" nome do processo, remover da lista do pm2
+pm2 start index.js --name=nomeQueEuQuiser => subir o aplicação com o nome que eu quero
+pm2 start index.js -i 0 => "-i" numero de instancias 0 é o numero de core da maquina
+
+pm2 start ecosystem.config.js
+pm2 stop ecosystem.config.js
+pm2 restart ecosystem.config.js => kill e restart
+pm2 reload ecosystem.config.js => espera e restart
+
+pm2 reload ecosystem.config.js --env production
+pm2 restart ecosystem.config.js --update-env
+
+git add . && git commit -am "ajuste" && git push heroku master
+heroku open
